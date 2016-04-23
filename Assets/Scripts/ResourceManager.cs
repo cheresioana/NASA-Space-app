@@ -45,24 +45,29 @@ public class ResourceManager : MonoBehaviour {
 
     // timers
     [SerializeField]
-    Transform oxygenBar;
+    Transform oxygenBar = null;
     [SerializeField]
-    Transform foodBar;
+    Transform foodBar = null;
     [SerializeField]
-    Transform waterBar;
+    Transform waterBar = null;
     [SerializeField]
-    Transform energyBar;
+    Transform energyBar = null;
 
     //[SerializeField]
     public List<Resource> m_resourceArr;
     
-    Dictionary<Resource.ResourceType, Resource> m_resources;
+    static Dictionary<Resource.ResourceType, Resource> m_resources;
+
+    void Awake()
+    {
+        m_resources = new Dictionary<Resource.ResourceType, Resource>();
+    }
 
     // Use this for initialization
     void Start () {
+        m_resources.Clear();
         // create default resources
         // duplicate resource type key...have it here and remove from Resource??
-        m_resources = new Dictionary<Resource.ResourceType, Resource>();
         m_resources[Resource.ResourceType.OXYGEN] = new Resource(oxygenBar, Resource.ResourceType.OXYGEN, m_defaultOxyigen, m_defaultOxyigenDepletionRate, m_oxyigenTimeToDeplete, m_oxygenMaxValue);
         m_resources[Resource.ResourceType.ENERGY] = new Resource(energyBar, Resource.ResourceType.ENERGY, m_defaultEnergy, m_defaultEnergyDepletionRate, m_energyTimeToDeplete, m_energyMaxValue);
         m_resources[Resource.ResourceType.FOOD] = new Resource(foodBar, Resource.ResourceType.FOOD, m_defaultFood, m_defaultFoodDepletionRate, m_foodTimeToDeplete, m_foodMaxValue);
@@ -105,7 +110,7 @@ public class ResourceManager : MonoBehaviour {
     }
 
     // can also use this for subtract
-    void AddToResource(Resource.ResourceType resource, int val)
+    public static void AddToResource(Resource.ResourceType resource, int val)
     {
         m_resources[resource].AddToVal(val);
         if (m_resources[resource].GetVal() > m_resources[resource].GetMaxValue())
@@ -116,7 +121,7 @@ public class ResourceManager : MonoBehaviour {
         UpdateBarScale(m_resources[resource]);
     }
 
-    public void UpdateBarScale(Resource res)
+    private static void UpdateBarScale(Resource res)
     {
         Transform obj = res.GetUIObjectTransform();
         if (obj)
