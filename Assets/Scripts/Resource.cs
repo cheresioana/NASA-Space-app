@@ -10,6 +10,7 @@ public class Resource {
     int depletionRate = 0;
     float timeToDeplete = 0; // in seconds
     float accumulatedTime = 0; // in seconds
+    int maxValue = 100;
 
     public Resource(ResourceType type, int val)
     {
@@ -31,6 +32,15 @@ public class Resource {
         this.val = val;
         this.depletionRate = depletionRate;
         this.timeToDeplete = timeToDeplete;
+    }
+
+    public Resource(ResourceType type, int val, int depletionRate, int timeToDeplete, int maxValue)
+    {
+        this.type = type;
+        this.val = val;
+        this.depletionRate = depletionRate;
+        this.timeToDeplete = timeToDeplete;
+        this.maxValue = maxValue;
     }
 
     public int GetVal()
@@ -71,5 +81,10 @@ public class Resource {
     public int GetDepletionRate()
     {
         return depletionRate;
+    }
+
+    public int GetMaxValue()
+    {
+        return maxValue;
     }
 }
