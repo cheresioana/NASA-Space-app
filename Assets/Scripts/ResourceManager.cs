@@ -103,7 +103,7 @@ public class ResourceManager : MonoBehaviour {
 
                     // play death phase
                 }
-
+                //Debug.Log("Value: " + m_resources[entry.Key].GetVal());
                 UpdateBarScale(m_resources[entry.Key]);
             }
         }
@@ -126,8 +126,8 @@ public class ResourceManager : MonoBehaviour {
         Transform obj = res.GetUIObjectTransform();
         if (obj)
         {
-            float defaultScale = obj.localScale.x; // this is full length
-            float newScale = defaultScale * res.GetVal() / m_resources[res.GetResourceType()].GetMaxValue();
+            const float defaultScale = 1; // this is full length
+            float newScale = defaultScale * res.GetVal() / (float)m_resources[res.GetResourceType()].GetMaxValue();
             obj.localScale = new Vector3(newScale, obj.localScale.y, obj.localScale.z);
         }
     }
