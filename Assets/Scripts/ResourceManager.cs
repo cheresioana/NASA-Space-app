@@ -58,6 +58,18 @@ public class ResourceManager : MonoBehaviour {
     
     static Dictionary<Resource.ResourceType, Resource> m_resources;
 
+    void OnEnable()
+    {
+        // add listener
+        EventManager.OnNotEnoughResources += HandleNotEnoughResources;
+    }
+
+    void OnDisable()
+    {
+        // remove listener
+        EventManager.OnNotEnoughResources -= HandleNotEnoughResources;
+    }
+
     void Awake()
     {
         m_resources = new Dictionary<Resource.ResourceType, Resource>();
@@ -114,6 +126,12 @@ public class ResourceManager : MonoBehaviour {
                 UpdateBarScale(m_resources[entry.Key]);
             }
         }
+
+//         This is a test (put something like this in your own class when you want to send an event
+//         if (Input.GetKeyDown(KeyCode.J))
+//         {
+//             EventManager.TriggerResourceEvent(EventManager.EventType.NOT_ENOUGH_RESOURCES, Resource.ResourceType.WATER);
+//         }
     }
 
     // can also use this for subtract
@@ -163,5 +181,10 @@ public class ResourceManager : MonoBehaviour {
 
             obj.Translate(new Vector3(-diff, 0f, 0f));
         }
+    }
+
+    private static void HandleNotEnoughResources(Resource.ResourceType resType)
+    {
+        Debug.Log("Not enough resources");
     }
 }
