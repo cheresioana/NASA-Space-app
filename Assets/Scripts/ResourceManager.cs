@@ -42,7 +42,7 @@ public class ResourceManager : MonoBehaviour {
     void Start () {
         // create default resources
         // duplicate resource type key...have it here and remove from Resource??
-
+        m_resources = new Dictionary<Resource.ResourceType, Resource>();
         m_resources[Resource.ResourceType.OXYGEN] = new Resource(Resource.ResourceType.OXYGEN, m_defaultOxyigen, m_defaultOxyigenDepletionRate, m_oxyigenTimeToDeplete);
         m_resources[Resource.ResourceType.ENERGY] = new Resource(Resource.ResourceType.ENERGY, m_defaultEnergy, m_defaultEnergyDepletionRate, m_energyTimeToDeplete);
         m_resources[Resource.ResourceType.FOOD] = new Resource(Resource.ResourceType.FOOD, m_defaultFood, m_defaultFoodDepletionRate, m_foodTimeToDeplete);
