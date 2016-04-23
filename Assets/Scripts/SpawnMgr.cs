@@ -50,7 +50,7 @@ public class SpawnMgr : MonoBehaviour {
     static int minItemsFound;
     static int maxItemsFound;
 
-    private static int m_fAccSpawnTime = 0;
+    private static float m_fAccSpawnTime = 0;
     private static int m_iCurrSpawnTime = 0;
 
     static List<Transform> m_spawnedInstances;
@@ -85,7 +85,7 @@ public class SpawnMgr : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        m_fAccSpawnTime += m_iCurrSpawnTime;
+        m_fAccSpawnTime += Time.deltaTime;
 
         if (m_fAccSpawnTime > m_iCurrSpawnTime)
         {
@@ -135,10 +135,10 @@ public class SpawnMgr : MonoBehaviour {
         Vector3 playerPos = player.position;
 
         float dropPodPosX = GetXSpawnDistance(playerPos.x);
-        float dropPodPosY = GetZSpawnDistance(playerPos.z);
+        float dropPodPosZ = GetZSpawnDistance(playerPos.z);
 
         Transform dropPodInstance = (Transform)Instantiate(dropPod, 
-            new Vector3(dropPodPosX, dropPodSpawnHeight, dropPodPosY), 
+            new Vector3(dropPodPosX, playerPos.y + dropPodSpawnHeight, dropPodPosZ), 
             Quaternion.identity);
         //dropPodInstance.transform.SetParent(this.transform, false);
         m_spawnedInstances.Add(dropPodInstance);
