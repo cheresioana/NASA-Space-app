@@ -76,8 +76,15 @@ public class ResourceManager : MonoBehaviour {
         // oh well
         foreach (KeyValuePair<Resource.ResourceType, Resource> entry in m_resources)
         {
-            
             Resource res = m_resources[entry.Key];
+            if (res == null)
+                continue;
+            RectTransform rt = res.GetUIObjectTransform().GetComponent<RectTransform>();
+            Vector3[] corners = new Vector3[4];
+            rt.GetWorldCorners(corners);
+
+            float panelWidth = Mathf.Abs(corners[0].x - corners[2].x);
+            res.SetUIObjectWidth(panelWidth);
             UpdateBarScale(res);
         }
     }
@@ -126,9 +133,25 @@ public class ResourceManager : MonoBehaviour {
         Transform obj = res.GetUIObjectTransform();
         if (obj)
         {
+            RectTransform rt = obj.GetComponent<RectTransform>();
+            Vector3[] corners = new Vector3[4];
+            rt.GetWorldCorners(corners);
+
+            float panelWidthOrig = Mathf.Abs(corners[0].x - corners[2].x);
+            float leftX = corners[0].x;
+
             const float defaultScale = 1; // this is full length
             float newScale = defaultScale * res.GetVal() / (float)m_resources[res.GetResourceType()].GetMaxValue();
+
+            float scaleDiff = (obj.localScale.x - newScale);
+
+            //if (scaleDiff != 0)
+            //    scaleDiff /= 2;
+            float diff = scaleDiff * res.GetUIObjectWidth() / 2;
+
             obj.localScale = new Vector3(newScale, obj.localScale.y, obj.localScale.z);
+
+            obj.Translate(new Vector3(-diff, 0f, 0f));
         }
     }
 }

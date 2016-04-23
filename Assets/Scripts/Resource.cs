@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Resource {
 
@@ -11,7 +12,9 @@ public class Resource {
     float timeToDeplete = 0; // in seconds
     float accumulatedTime = 0; // in seconds
     int maxValue = 100;
+    // this shouldn't be here, but hey
     Transform uiObj;
+    float uiObjWidth = 0;
 
     public Resource(Transform obj, ResourceType type, int val, int depletionRate, int timeToDeplete, int maxValue)
     {
@@ -76,5 +79,15 @@ public class Resource {
     public Transform GetUIObjectTransform()
     {
         return uiObj;
+    }
+
+    public void SetUIObjectWidth(float width)
+    {
+        uiObjWidth = width;
+    }
+
+    public float GetUIObjectWidth()
+    {
+        return uiObjWidth;
     }
 }
