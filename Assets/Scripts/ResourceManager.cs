@@ -155,9 +155,9 @@ public class ResourceManager : MonoBehaviour {
 
             float scaleDiff = (obj.localScale.x - newScale);
 
-            //if (scaleDiff != 0)
-            //    scaleDiff /= 2;
-            float diff = scaleDiff * res.GetUIObjectWidth() / 2;
+            float diff = 0;
+            if (scaleDiff != 0)
+                diff = scaleDiff * res.GetUIObjectWidth() / 2;
 
             obj.localScale = new Vector3(newScale, obj.localScale.y, obj.localScale.z);
 
