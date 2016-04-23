@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Resource : MonoBehaviour {
+public class Resource {
 
     public enum ResourceType { OXYGEN, FOOD, WATER, ENERGY };
 
