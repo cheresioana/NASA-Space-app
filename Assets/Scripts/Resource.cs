@@ -11,36 +11,16 @@ public class Resource {
     float timeToDeplete = 0; // in seconds
     float accumulatedTime = 0; // in seconds
     int maxValue = 100;
+    Transform uiObj;
 
-    public Resource(ResourceType type, int val)
-    {
-        this.type = type;
-        this.val = val;
-        this.depletionRate = 1;
-    }
-
-    public Resource (ResourceType type, int val, int depletionRate)
-    {
-        this.type = type;
-        this.val = val;
-        this.depletionRate = depletionRate;
-    }
-
-    public Resource(ResourceType type, int val, int depletionRate, int timeToDeplete)
-    {
-        this.type = type;
-        this.val = val;
-        this.depletionRate = depletionRate;
-        this.timeToDeplete = timeToDeplete;
-    }
-
-    public Resource(ResourceType type, int val, int depletionRate, int timeToDeplete, int maxValue)
+    public Resource(Transform obj, ResourceType type, int val, int depletionRate, int timeToDeplete, int maxValue)
     {
         this.type = type;
         this.val = val;
         this.depletionRate = depletionRate;
         this.timeToDeplete = timeToDeplete;
         this.maxValue = maxValue;
+        this.uiObj = obj;
     }
 
     public int GetVal()
@@ -86,5 +66,15 @@ public class Resource {
     public int GetMaxValue()
     {
         return maxValue;
+    }
+
+    public ResourceType GetResourceType()
+    {
+        return type;
+    }
+
+    public Transform GetUIObjectTransform()
+    {
+        return uiObj;
     }
 }

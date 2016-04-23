@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public class ResourceManager : MonoBehaviour {
 
     [SerializeField]
-    int m_defaultOxyigen = 10;
+    int m_defaultOxyigen = 100;
     [SerializeField]
-    int m_defaultEnergy = 10;
+    int m_defaultEnergy = 100;
     [SerializeField]
-    int m_defaultFood = 10;
+    int m_defaultFood = 100;
     [SerializeField]
-    int m_defaultWater = 10;
+    int m_defaultWater = 100;
     
     // depletionRates
     [SerializeField]
@@ -43,6 +43,16 @@ public class ResourceManager : MonoBehaviour {
     [SerializeField]
     int m_waterMaxValue = 100;
 
+    // timers
+    [SerializeField]
+    Transform oxygenBar;
+    [SerializeField]
+    Transform foodBar;
+    [SerializeField]
+    Transform waterBar;
+    [SerializeField]
+    Transform energyBar;
+
     //[SerializeField]
     public List<Resource> m_resourceArr;
     
@@ -53,10 +63,18 @@ public class ResourceManager : MonoBehaviour {
         // create default resources
         // duplicate resource type key...have it here and remove from Resource??
         m_resources = new Dictionary<Resource.ResourceType, Resource>();
-        m_resources[Resource.ResourceType.OXYGEN] = new Resource(Resource.ResourceType.OXYGEN, m_defaultOxyigen, m_defaultOxyigenDepletionRate, m_oxyigenTimeToDeplete, m_oxygenMaxValue);
-        m_resources[Resource.ResourceType.ENERGY] = new Resource(Resource.ResourceType.ENERGY, m_defaultEnergy, m_defaultEnergyDepletionRate, m_energyTimeToDeplete, m_energyMaxValue);
-        m_resources[Resource.ResourceType.FOOD] = new Resource(Resource.ResourceType.FOOD, m_defaultFood, m_defaultFoodDepletionRate, m_foodTimeToDeplete, m_foodMaxValue);
-        m_resources[Resource.ResourceType.WATER] = new Resource(Resource.ResourceType.WATER, m_defaultWater, m_defaultWaterDepletionRate, m_waterTimeToDeplete, m_waterMaxValue);
+        m_resources[Resource.ResourceType.OXYGEN] = new Resource(oxygenBar, Resource.ResourceType.OXYGEN, m_defaultOxyigen, m_defaultOxyigenDepletionRate, m_oxyigenTimeToDeplete, m_oxygenMaxValue);
+        m_resources[Resource.ResourceType.ENERGY] = new Resource(energyBar, Resource.ResourceType.ENERGY, m_defaultEnergy, m_defaultEnergyDepletionRate, m_energyTimeToDeplete, m_energyMaxValue);
+        m_resources[Resource.ResourceType.FOOD] = new Resource(foodBar, Resource.ResourceType.FOOD, m_defaultFood, m_defaultFoodDepletionRate, m_foodTimeToDeplete, m_foodMaxValue);
+        m_resources[Resource.ResourceType.WATER] = new Resource(waterBar, Resource.ResourceType.WATER, m_defaultWater, m_defaultWaterDepletionRate, m_waterTimeToDeplete, m_waterMaxValue);
+
+        // oh well
+        foreach (KeyValuePair<Resource.ResourceType, Resource> entry in m_resources)
+        {
+            
+            Resource res = m_resources[entry.Key];
+            UpdateBarScale(res);
+        }
     }
 	
 	// Update is called once per frame
@@ -80,6 +98,8 @@ public class ResourceManager : MonoBehaviour {
 
                     // play death phase
                 }
+
+                UpdateBarScale(m_resources[entry.Key]);
             }
         }
     }
@@ -91,6 +111,19 @@ public class ResourceManager : MonoBehaviour {
         if (m_resources[resource].GetVal() > m_resources[resource].GetMaxValue())
         {
             m_resources[resource].SetVal(m_resources[resource].GetMaxValue());
+        }
+
+        UpdateBarScale(m_resources[resource]);
+    }
+
+    public void UpdateBarScale(Resource res)
+    {
+        Transform obj = res.GetUIObjectTransform();
+        if (obj)
+        {
+            float defaultScale = obj.localScale.x; // this is full length
+            float newScale = defaultScale * res.GetVal() / m_resources[res.GetResourceType()].GetMaxValue();
+            obj.localScale = new Vector3(newScale, obj.localScale.y, obj.localScale.z);
         }
     }
 }
