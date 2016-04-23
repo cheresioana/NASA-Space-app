@@ -128,6 +128,16 @@ public class ResourceManager : MonoBehaviour {
         UpdateBarScale(m_resources[resource]);
     }
 
+    public static int GetResourceVal(Resource.ResourceType type)
+    {
+        return m_resources[type].GetVal();
+    }
+
+    public static int GetMaxResourceVal(Resource.ResourceType type)
+    {
+        return m_resources[type].GetMaxValue();
+    }
+
     private static void UpdateBarScale(Resource res)
     {
         Transform obj = res.GetUIObjectTransform();
