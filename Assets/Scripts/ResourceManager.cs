@@ -33,6 +33,16 @@ public class ResourceManager : MonoBehaviour {
     [SerializeField]
     int m_waterTimeToDeplete = 1;
 
+    // timers
+    [SerializeField]
+    int m_oxygenMaxValue = 100;
+    [SerializeField]
+    int m_energyMaxValue = 100;
+    [SerializeField]
+    int m_foodMaxValue = 100;
+    [SerializeField]
+    int m_waterMaxValue = 100;
+
     //[SerializeField]
     public List<Resource> m_resourceArr;
     
@@ -43,10 +53,10 @@ public class ResourceManager : MonoBehaviour {
         // create default resources
         // duplicate resource type key...have it here and remove from Resource??
         m_resources = new Dictionary<Resource.ResourceType, Resource>();
-        m_resources[Resource.ResourceType.OXYGEN] = new Resource(Resource.ResourceType.OXYGEN, m_defaultOxyigen, m_defaultOxyigenDepletionRate, m_oxyigenTimeToDeplete);
-        m_resources[Resource.ResourceType.ENERGY] = new Resource(Resource.ResourceType.ENERGY, m_defaultEnergy, m_defaultEnergyDepletionRate, m_energyTimeToDeplete);
-        m_resources[Resource.ResourceType.FOOD] = new Resource(Resource.ResourceType.FOOD, m_defaultFood, m_defaultFoodDepletionRate, m_foodTimeToDeplete);
-        m_resources[Resource.ResourceType.WATER] = new Resource(Resource.ResourceType.WATER, m_defaultWater, m_defaultWaterDepletionRate, m_waterTimeToDeplete);
+        m_resources[Resource.ResourceType.OXYGEN] = new Resource(Resource.ResourceType.OXYGEN, m_defaultOxyigen, m_defaultOxyigenDepletionRate, m_oxyigenTimeToDeplete, m_oxygenMaxValue);
+        m_resources[Resource.ResourceType.ENERGY] = new Resource(Resource.ResourceType.ENERGY, m_defaultEnergy, m_defaultEnergyDepletionRate, m_energyTimeToDeplete, m_energyMaxValue);
+        m_resources[Resource.ResourceType.FOOD] = new Resource(Resource.ResourceType.FOOD, m_defaultFood, m_defaultFoodDepletionRate, m_foodTimeToDeplete, m_foodMaxValue);
+        m_resources[Resource.ResourceType.WATER] = new Resource(Resource.ResourceType.WATER, m_defaultWater, m_defaultWaterDepletionRate, m_waterTimeToDeplete, m_waterMaxValue);
     }
 	
 	// Update is called once per frame
@@ -62,6 +72,14 @@ public class ResourceManager : MonoBehaviour {
                 // reset the accumulated time and deplete resource by rate
                 m_resources[entry.Key].ResetAccumulatedTime();
                 m_resources[entry.Key].AddToVal(-m_resources[entry.Key].GetDepletionRate());
+
+                // bound check with 0
+                if (m_resources[entry.Key].GetVal() < 0)
+                {
+                    m_resources[entry.Key].SetVal(0);
+
+                    // play death phase
+                }
             }
         }
     }
@@ -70,5 +88,9 @@ public class ResourceManager : MonoBehaviour {
     void AddToResource(Resource.ResourceType resource, int val)
     {
         m_resources[resource].AddToVal(val);
+        if (m_resources[resource].GetVal() > m_resources[resource].GetMaxValue())
+        {
+            m_resources[resource].SetVal(m_resources[resource].GetMaxValue());
+        }
     }
 }
