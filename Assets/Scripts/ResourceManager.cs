@@ -117,11 +117,14 @@ public class ResourceManager : MonoBehaviour {
             if (m_resources[entry.Key].GetAccumulatedTime() > m_resources[entry.Key].GetTimeToDeplete())
             {
                 // reset the accumulated time and deplete resource by rate
-                m_resources[entry.Key].ResetAccumulatedTime();
-                m_resources[entry.Key].AddToVal(-m_resources[entry.Key].GetDepletionRate());
+                if (entry.Key == Resource.ResourceType.OXYGEN || entry.Key == Resource.ResourceType.FOOD)
+                {
+                    m_resources[entry.Key].ResetAccumulatedTime();
+                    m_resources[entry.Key].AddToVal(-m_resources[entry.Key].GetDepletionRate());
+                }
 
                 // bound check with 0
-                if (m_resources[entry.Key].GetVal() < 0 && !HAS_FADED)
+                if (m_resources[entry.Key].GetVal() < 0 && !HAS_FADED && entry.Key != Resource.ResourceType.ENERGY)
                 {
                     m_resources[entry.Key].SetVal(0);
 
