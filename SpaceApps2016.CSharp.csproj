@@ -69,9 +69,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\NewBehaviourScript2.cs" />
+    <Compile Include="Assets\ScreenFader\ScreenFadeControl.cs" />
+    <Compile Include="Assets\ScreenFader\ScreenFader.cs" />
+    <Compile Include="Assets\Scripts\DropPod.cs" />
+    <Compile Include="Assets\Scripts\EnterScript.cs" />
+    <Compile Include="Assets\Scripts\EventManager.cs" />
+    <Compile Include="Assets\Scripts\FadeRenderer.cs" />
+    <Compile Include="Assets\Scripts\GUICanvas.cs" />
+    <Compile Include="Assets\Scripts\MoveScript2.cs" />
+    <Compile Include="Assets\Scripts\Plants.cs" />
     <Compile Include="Assets\Scripts\Resource.cs" />
     <Compile Include="Assets\Scripts\ResourceManager.cs" />
+    <Compile Include="Assets\Scripts\SpawnMgr.cs" />
     <Compile Include="Assets\Scripts\moveScript.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\ScreenFader\Unlit Transparent HUD.shader" />
+    <None Include="Assets\Shaders\Default_FontDrawOnTop.shader" />
+    <None Include="Assets\Shaders\Default_OverlayNoZTest.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
