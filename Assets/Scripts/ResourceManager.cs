@@ -122,9 +122,9 @@ public class ResourceManager : MonoBehaviour {
                     m_resources[entry.Key].ResetAccumulatedTime();
                     m_resources[entry.Key].AddToVal(-m_resources[entry.Key].GetDepletionRate());
                 }
-                else if (entry.Key == Resource.ResourceType.ENERGY)
+                else if (entry.Key == Resource.ResourceType.ENERGY || entry.Key == Resource.ResourceType.WATER)
                 {
-                    if (moveScript.in_rover)
+                    if (moveScript.in_rover && entry.Key == Resource.ResourceType.ENERGY)
                     {
                         m_resources[entry.Key].ResetAccumulatedTime();
                         m_resources[entry.Key].AddToVal(-1.5f * m_resources[entry.Key].GetDepletionRate());
