@@ -122,6 +122,11 @@ public class ResourceManager : MonoBehaviour {
                     m_resources[entry.Key].ResetAccumulatedTime();
                     m_resources[entry.Key].AddToVal(-m_resources[entry.Key].GetDepletionRate());
                 }
+                else if (entry.Key == Resource.ResourceType.ENERGY)
+                {
+                    m_resources[entry.Key].ResetAccumulatedTime();
+                    m_resources[entry.Key].AddToVal(m_resources[entry.Key].GetDepletionRate());
+                }
 
                 // bound check with 0
                 if (m_resources[entry.Key].GetVal() < 0 && !HAS_FADED && entry.Key != Resource.ResourceType.ENERGY)
