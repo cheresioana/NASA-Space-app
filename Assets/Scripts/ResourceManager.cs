@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class ResourceManager : MonoBehaviour {
 
@@ -122,6 +123,28 @@ public class ResourceManager : MonoBehaviour {
 
                     // play death phase
                 }
+
+                if (m_resources[entry.Key].GetVal() < 20)
+                {
+                    Transform obj = m_resources[entry.Key].GetUIObjectTransform();
+                    Transform objText = obj.parent.parent.transform;
+
+                    //rgb(240, 128, 128)
+                    //  if (objText.GetComponent<Text>().color != Color.red)
+                    //     objText.GetComponent<Text>().color = Color.red;
+
+                    // rgb(178,34,34) firebrick
+
+                    objText.GetComponent<Text>().color = new Color(1.0f, 0.3f, 0.3f);
+                }
+                else
+                {
+                    Transform obj = m_resources[entry.Key].GetUIObjectTransform();
+                    Transform objText = obj.parent.parent.transform;
+                    if (objText.GetComponent<Text>().color != Color.white)
+                        objText.GetComponent<Text>().color = Color.white;
+                }
+
                 //Debug.Log("Value: " + m_resources[entry.Key].GetVal());
                 UpdateBarScale(m_resources[entry.Key]);
             }
