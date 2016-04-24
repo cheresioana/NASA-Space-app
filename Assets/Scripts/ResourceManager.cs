@@ -157,6 +157,7 @@ public class ResourceManager : MonoBehaviour {
                             ScreenFader screenFader = fadeObject.GetComponent<ScreenFader>();
                             if (screenFader)
                             {
+                                moveScript.playerDead = true;
                                 screenFader.fadeIn = !screenFader.fadeIn;
                                 HAS_FADED = true;
                                 StartCoroutine(WaitSomeSeconds(2)); // level restarts here
