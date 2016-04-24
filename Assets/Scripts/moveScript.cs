@@ -56,7 +56,8 @@ public class moveScript : MonoBehaviour {
         if (hit.gameObject.tag == "Pickup")
         {
             // destroy the capsule at the root (the Package)
-            Destroy(hit.transform.root.gameObject);
+            //Destroy(hit.transform.root.gameObject);
+            Destroy(hit.transform.parent.gameObject);
             SpawnMgr.RemoveDropPod(hit.gameObject.transform);
             
             Resource.ResourceType resourceType = SpawnMgr.GetRandomResource();
