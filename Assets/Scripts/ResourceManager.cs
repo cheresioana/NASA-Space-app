@@ -117,7 +117,7 @@ public class ResourceManager : MonoBehaviour {
             if (m_resources[entry.Key].GetAccumulatedTime() > m_resources[entry.Key].GetTimeToDeplete())
             {
                 // reset the accumulated time and deplete resource by rate
-                if (entry.Key == Resource.ResourceType.OXYGEN || entry.Key == Resource.ResourceType.FOOD)
+                if (entry.Key == Resource.ResourceType.OXYGEN && !moveScript.in_house || entry.Key == Resource.ResourceType.FOOD)
                 {
                     m_resources[entry.Key].ResetAccumulatedTime();
                     m_resources[entry.Key].AddToVal(-m_resources[entry.Key].GetDepletionRate());
