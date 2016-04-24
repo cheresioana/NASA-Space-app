@@ -3,6 +3,9 @@ using System.Collections;
 
 public class moveScript : MonoBehaviour {
     public float speed = 8.0F;
+    public Light entrance_pos;
+    public Light exit_light;
+    public static bool in_house = false;
     public float jumpSpeed = 8.0F;
     public float gravity = 200F;
     public bool in_rover = false;
@@ -40,12 +43,22 @@ public class moveScript : MonoBehaviour {
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        if (hit.gameObject.tag == "Exit")
+        {
+            in_house = false;
+            this.transform.position = exit_light.transform.position;
+        }
+        if (hit.gameObject.tag == "Enter")
+        {
+            this.transform.position = entrance_pos.transform.position;
+            in_house = true;
+        }
         if (hit.gameObject.tag == "Pickup")
         {
             // destroy the capsule at the root (the Package)
             Destroy(hit.transform.root.gameObject);
             SpawnMgr.RemoveDropPod(hit.gameObject.transform);
-
+            
             Resource.ResourceType resourceType = SpawnMgr.GetRandomResource();
             int bonus = SpawnMgr.GetRandomAmount();
 
