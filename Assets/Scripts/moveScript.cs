@@ -37,4 +37,20 @@ public class moveScript : MonoBehaviour {
             controller.Move(moveDirection * Time.deltaTime);
         }
     }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.tag == "Pickup")
+        {
+            // destroy the capsule at the root (the Package)
+            Destroy(hit.transform.root.gameObject);
+            SpawnMgr.RemoveDropPod(hit.gameObject.transform);
+
+            Resource.ResourceType resourceType = SpawnMgr.GetRandomResource();
+            int bonus = SpawnMgr.GetRandomAmount();
+
+            // get bonus points
+            ResourceManager.AddToResource(resourceType, bonus);
+        }
+    }
 }
