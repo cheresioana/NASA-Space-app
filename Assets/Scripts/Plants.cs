@@ -83,7 +83,9 @@ public class Plants : MonoBehaviour {
             {
                 p3.SetActive(false);
                 level = -1;
-                ResourceManager.AddToResource(Resource.ResourceType.FOOD, 100);
+                if (ResourceManager.GetResourceVal(Resource.ResourceType.FOOD) > 60)
+                    ResourceManager.AddToResource(Resource.ResourceType.FOOD, 100 - ResourceManager.GetResourceVal(Resource.ResourceType.FOOD));
+                else ResourceManager.AddToResource(Resource.ResourceType.FOOD, 40);
                 light.intensity = 0;
             }
             ResourceManager.AddToResource(Resource.ResourceType.ENERGY, -10);
@@ -96,5 +98,7 @@ public class Plants : MonoBehaviour {
             light.intensity = 0;
             rend.material.color = Color.red;
         }
+        if (ResourceManager.GetResourceVal(Resource.ResourceType.OXYGEN) < 100)
+            ResourceManager.AddToResource(Resource.ResourceType.ENERGY, 10);
     }
 }
