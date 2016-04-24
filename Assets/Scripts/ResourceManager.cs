@@ -144,20 +144,23 @@ public class ResourceManager : MonoBehaviour {
                 }
 
                 // bound check with 0
-                if (m_resources[entry.Key].GetVal() < 0 && !HAS_FADED && entry.Key != Resource.ResourceType.ENERGY)
+                if (m_resources[entry.Key].GetVal() < 0)
                 {
                     m_resources[entry.Key].SetVal(0);
 
-                    // play death phase
-                    GameObject fadeObject = GameObject.FindWithTag("Fader");
-                    if (fadeObject)
+                    if (!HAS_FADED && entry.Key != Resource.ResourceType.ENERGY)
                     {
-                        ScreenFader screenFader = fadeObject.GetComponent<ScreenFader>();
-                        if (screenFader)
+                        // play death phase
+                        GameObject fadeObject = GameObject.FindWithTag("Fader");
+                        if (fadeObject)
                         {
-                            screenFader.fadeIn = !screenFader.fadeIn;
-                            HAS_FADED = true;
-                            StartCoroutine(WaitSomeSeconds(2)); // level restarts here
+                            ScreenFader screenFader = fadeObject.GetComponent<ScreenFader>();
+                            if (screenFader)
+                            {
+                                screenFader.fadeIn = !screenFader.fadeIn;
+                                HAS_FADED = true;
+                                StartCoroutine(WaitSomeSeconds(2)); // level restarts here
+                            }
                         }
                     }
                 }
