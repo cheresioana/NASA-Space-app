@@ -122,7 +122,7 @@ public class ResourceManager : MonoBehaviour {
                     m_resources[entry.Key].ResetAccumulatedTime();
                     m_resources[entry.Key].AddToVal(-m_resources[entry.Key].GetDepletionRate());
                 }
-                else if (entry.Key == Resource.ResourceType.ENERGY)
+                else if (entry.Key == Resource.ResourceType.ENERGY && m_resources[entry.Key].GetVal() < m_resources[entry.Key].GetMaxValue())
                 {
                     m_resources[entry.Key].ResetAccumulatedTime();
                     m_resources[entry.Key].AddToVal(m_resources[entry.Key].GetDepletionRate());
