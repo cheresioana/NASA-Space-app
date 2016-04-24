@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ResourceManager : MonoBehaviour {
 
@@ -56,6 +57,8 @@ public class ResourceManager : MonoBehaviour {
 
     //[SerializeField]
     public List<Resource> m_resourceArr;
+
+    private static bool HAS_FADED = false;
     
     static Dictionary<Resource.ResourceType, Resource> m_resources;
 
@@ -74,6 +77,7 @@ public class ResourceManager : MonoBehaviour {
     void Awake()
     {
         m_resources = new Dictionary<Resource.ResourceType, Resource>();
+        HAS_FADED = false;
     }
 
     // Use this for initialization
@@ -117,11 +121,26 @@ public class ResourceManager : MonoBehaviour {
                 m_resources[entry.Key].AddToVal(-m_resources[entry.Key].GetDepletionRate());
 
                 // bound check with 0
-                if (m_resources[entry.Key].GetVal() < 0)
+                if (m_resources[entry.Key].GetVal() < 0 && !HAS_FADED)
                 {
                     m_resources[entry.Key].SetVal(0);
 
                     // play death phase
+                    GameObject fadeObject = GameObject.FindWithTag("Fader");
+                    if (fadeObject)
+                    {
+                        ScreenFader screenFader = fadeObject.GetComponent<ScreenFader>();
+                        if (screenFader)
+                        {
+                            screenFader.fadeIn = !screenFader.fadeIn;
+                            HAS_FADED = true;
+                            StartCoroutine(WaitSomeSeconds(2)); // level restarts here
+                        }
+                    }
+                }
+                else if (HAS_FADED)
+                {
+                    return;
                 }
 
                 if (m_resources[entry.Key].GetVal() < 20)
@@ -202,5 +221,14 @@ public class ResourceManager : MonoBehaviour {
     private static void HandleNotEnoughResources(Resource.ResourceType resType)
     {
         Debug.Log("Not enough resources");
+    }
+
+    private static IEnumerator WaitSomeSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        //Application.LoadLevel(0);
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
     }
 }
