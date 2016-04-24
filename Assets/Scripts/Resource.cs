@@ -7,7 +7,7 @@ public class Resource {
     public enum ResourceType { OXYGEN, FOOD, WATER, ENERGY };
 
     ResourceType type;
-    int val = 0;
+    float val = 0;
     int depletionRate = 0;
     float timeToDeplete = 0; // in seconds
     float accumulatedTime = 0; // in seconds
@@ -26,17 +26,17 @@ public class Resource {
         this.uiObj = obj;
     }
 
-    public int GetVal()
+    public float GetVal()
     {
         return val;
     }
 
-    public void AddToVal(int val)
+    public void AddToVal(float val)
     {
         this.val += val;
     }
 
-    public void SetVal(int val)
+    public void SetVal(float val)
     {
         this.val = val;
     }

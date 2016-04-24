@@ -127,7 +127,7 @@ public class ResourceManager : MonoBehaviour {
                     if (moveScript.in_rover)
                     {
                         m_resources[entry.Key].ResetAccumulatedTime();
-                        m_resources[entry.Key].AddToVal(-m_resources[entry.Key].GetDepletionRate()/2);
+                        m_resources[entry.Key].AddToVal(-1.5f * m_resources[entry.Key].GetDepletionRate());
                     }
                     else
                     {
@@ -200,7 +200,7 @@ public class ResourceManager : MonoBehaviour {
     }
 
     // can also use this for subtract
-    public static void AddToResource(Resource.ResourceType resource, int val)
+    public static void AddToResource(Resource.ResourceType resource, float val)
     {
         m_resources[resource].AddToVal(val);
         if (m_resources[resource].GetVal() > m_resources[resource].GetMaxValue())
@@ -211,12 +211,12 @@ public class ResourceManager : MonoBehaviour {
         UpdateBarScale(m_resources[resource]);
     }
 
-    public static void SetResourceVal(Resource.ResourceType type, int val)
+    public static void SetResourceVal(Resource.ResourceType type, float val)
     {
         m_resources[type].SetVal(val);
     }
 
-    public static int GetResourceVal(Resource.ResourceType type)
+    public static float GetResourceVal(Resource.ResourceType type)
     {
         return m_resources[type].GetVal();
     }
