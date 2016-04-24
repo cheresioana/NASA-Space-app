@@ -124,16 +124,23 @@ public class ResourceManager : MonoBehaviour {
                 }
                 else if (entry.Key == Resource.ResourceType.ENERGY)
                 {
-                    if (m_resources[entry.Key].GetVal() < m_resources[entry.Key].GetMaxValue())
+                    if (moveScript.in_rover)
                     {
                         m_resources[entry.Key].ResetAccumulatedTime();
-                        m_resources[entry.Key].AddToVal(m_resources[entry.Key].GetDepletionRate());
+                        m_resources[entry.Key].AddToVal(-m_resources[entry.Key].GetDepletionRate()/2);
                     }
                     else
                     {
-                        m_resources[entry.Key].SetVal(m_resources[entry.Key].GetMaxValue());
+                        if (m_resources[entry.Key].GetVal() < m_resources[entry.Key].GetMaxValue())
+                        {
+                            m_resources[entry.Key].ResetAccumulatedTime();
+                            m_resources[entry.Key].AddToVal(m_resources[entry.Key].GetDepletionRate());
+                        }
+                        else
+                        {
+                            m_resources[entry.Key].SetVal(m_resources[entry.Key].GetMaxValue());
+                        }
                     }
-                    
                 }
 
                 // bound check with 0

@@ -13,23 +13,23 @@ public class MoveScript2 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        moveScript player_movement = player.GetComponent<moveScript>();
+        //moveScript player_movement = player.GetComponent<moveScript>();
         if (Input.GetKeyDown("f") && Vector3.Distance(player.transform.position, transform.position) < 10)
         {
-            if (player_movement.in_rover)
+            if (moveScript.in_rover)
             {
-                player_movement.in_rover = false;
+                moveScript.in_rover = false;
                 player.transform.rotation.Set(0f, 0.3f, 0f, 0.9f);
             }
             else
             {
                 Debug.Log(player.transform.rotation.ToString());
-                player_movement.in_rover = true;
+                moveScript.in_rover = true;
                 player.transform.rotation = this.transform.rotation;
             }
             //rb.AddForce(new Vector3(thrust, 0, thrust));
         }
-        if (player_movement.in_rover)
+        if (moveScript.in_rover)
         {
             Vector3 rotation = new Vector3(0, Input.GetAxis("Horizontal") * 5, 0);
             this.transform.Rotate(rotation);

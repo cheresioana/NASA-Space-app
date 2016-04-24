@@ -8,9 +8,16 @@ public class moveScript : MonoBehaviour {
     public static bool in_house = false;
     public float jumpSpeed = 8.0F;
     public float gravity = 200F;
-    public bool in_rover = false;
+    public static bool in_rover = false;
     Vector3 rotation;
     private Vector3 moveDirection = Vector3.zero;
+
+    void Awake()
+    {
+        in_house = false;
+        in_rover = false;
+    }
+
     void Update()
     {
         if (!in_rover)
