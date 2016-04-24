@@ -122,10 +122,18 @@ public class ResourceManager : MonoBehaviour {
                     m_resources[entry.Key].ResetAccumulatedTime();
                     m_resources[entry.Key].AddToVal(-m_resources[entry.Key].GetDepletionRate());
                 }
-                else if (entry.Key == Resource.ResourceType.ENERGY && m_resources[entry.Key].GetVal() < m_resources[entry.Key].GetMaxValue())
+                else if (entry.Key == Resource.ResourceType.ENERGY)
                 {
-                    m_resources[entry.Key].ResetAccumulatedTime();
-                    m_resources[entry.Key].AddToVal(m_resources[entry.Key].GetDepletionRate());
+                    if (m_resources[entry.Key].GetVal() < m_resources[entry.Key].GetMaxValue())
+                    {
+                        m_resources[entry.Key].ResetAccumulatedTime();
+                        m_resources[entry.Key].AddToVal(m_resources[entry.Key].GetDepletionRate());
+                    }
+                    else
+                    {
+                        m_resources[entry.Key].SetVal(m_resources[entry.Key].GetMaxValue());
+                    }
+                    
                 }
 
                 // bound check with 0
@@ -194,6 +202,11 @@ public class ResourceManager : MonoBehaviour {
         }
 
         UpdateBarScale(m_resources[resource]);
+    }
+
+    public static void SetResourceVal(Resource.ResourceType type, int val)
+    {
+        m_resources[type].SetVal(val);
     }
 
     public static int GetResourceVal(Resource.ResourceType type)
