@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class MoveScript2 : MonoBehaviour {
-    float thrust = 100f;
+    float thrust = 150f;
     public Rigidbody rb;
     public Vector3 cameraFollowOffset = new Vector3(0, 10, -10);
     public Camera player;
